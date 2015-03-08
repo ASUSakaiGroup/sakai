@@ -55,3 +55,9 @@ For testing out the latest builds go to the [nightly server page](http://nightly
 ## Get in touch
 
 If you have any questions, please join the Sakai developer mailing list: http://collab.sakaiproject.org/mailman/listinfo/sakai-dev
+
+## For the ASU team:
+
+```
+sudo mvn -Dsakai.demo=true clean install sakai:deploy -Dmaven.test.skip=true -Dmaven.tomcat.home=$CATALINA_HOME
+```
