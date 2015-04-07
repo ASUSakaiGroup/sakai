@@ -174,9 +174,8 @@
 	        	<h:outputText value="#{msgs.student_view_comment_header}"/>
 	        </f:facet>
 
-					<h:commandButton value="#{msgs.show_graph_button}" type="button" onclick="jstest();" />
-					<h:commandButton value="#{msgs.show_graph_button_2}" type="button" onclick="jstest2();" />
-					<h:commandButton value="#{msgs.test_value}" type="button" onclick="jstest()" />
+					<h:commandButton value="#{msgs.show_graph_button}" type="button" onclick="jstest(#{row.graphScores});" />
+					<h:commandButton value="#{msgs.show_graph_button_2}" type="button" onclick="jstest2(#{row.graphDates});" />
 
 	        <h:outputText value="#{row.commentText}" rendered="#{row.assignment && row.commentText != null}" />
 		    </h:column>
@@ -198,6 +197,7 @@
 
 			<h:form id="graphArea">
 				<canvas id="gradeGraph" width="300" height="150"></canvas>
+				<canvas id="dateGraph" width="300" height="150"></canvas>
 			</h:form>
 
 		</h:form>
