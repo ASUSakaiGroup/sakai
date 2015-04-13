@@ -1,3 +1,14 @@
+function show_graphs(scores, dates) {
+  var graphArea = document.getElementById('graphArea');
+  graphArea.innerHTML = '';
+  graphArea.innerHTML = '<canvas id="gradeGraph" width="300" height="150"></canvas>';
+  graphArea.innerHTML = graphArea.innerHTML + '<canvas id="dateGraph" width="300" height="150"></canvas>';
+
+  jstest(scores);
+  jstest2(dates);
+}
+
+
 function jstest(scores)
 {
   console.log("jstest");
@@ -22,8 +33,6 @@ function jstest(scores)
 
   var canvas = document.getElementById('gradeGraph');
   var context = canvas.getContext('2d');
-  context.clearRect( 0 , 0 , canvas.width, canvas.height);
-
   var gradeGraph = new Chart(context).Bar(gradeData); // gradeGraph is the graph itself
 
   gradeGraph.datasets[0].bars[0].fillColor = "red";
@@ -59,13 +68,10 @@ function jstest2(dates)
 
   var canvas = document.getElementById('dateGraph');
   var context = canvas.getContext('2d');
-  context.clearRect( 0 , 0 , canvas.width, canvas.height);
-
-  var dateGraph = new Chart(context).Bar(dateData); // gradeGraph is the graph itself
+  var dateGraph = new Chart(context).Bar(dateData);
 
   dateGraph.datasets[0].bars[0].fillColor = "red";
   dateGraph.datasets[0].bars[0].highlightFill = "pink";
-
 
   dateGraph.datasets[0].bars[studentLocationDate].fillColor = "green";
   dateGraph.datasets[0].bars[studentLocationDate].highlightFill = "lightgreen";
