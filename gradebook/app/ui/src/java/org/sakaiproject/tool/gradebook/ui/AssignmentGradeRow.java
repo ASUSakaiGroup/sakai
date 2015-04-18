@@ -52,6 +52,9 @@ public class AssignmentGradeRow extends GradebookDependentBean implements Serial
 
 		private List<Double> graphScores;
 		private List<Double> graphDates;
+    private Double averageGrade;
+    private Double lowGrade;
+    private Double highGrade;
 
     public AssignmentGradeRow(Assignment assignment, Gradebook gradebook) {
     	this.assignment = assignment;
@@ -69,7 +72,7 @@ public class AssignmentGradeRow extends GradebookDependentBean implements Serial
 			initializeGraphDates();
     }
 
-		public void initializeGraphScores() {
+		public void initializeGraphArrays() {
 			graphScores = new ArrayList();
 
 	    graphScores.add(0.00);
@@ -84,102 +87,122 @@ public class AssignmentGradeRow extends GradebookDependentBean implements Serial
 	    graphScores.add(0.00);
 	    graphScores.add(0.00);
 
+      graphDates = new ArrayList();
+
+      graphDates.add(0.00);
+      graphDates.add(0.00);
+      graphDates.add(0.00);
+
 			List enrollments = getSectionAwareness().getSiteMembersInRole(getGradebookUid(), Role.STUDENT);
 
 			AssignmentGradeRecord gradeRecord;
 			String studentUid;
 			Double score;
-			Double newValue;
+			Double newGradeValue;
+
+      Date submissionDate;
+      Double newTimeValue;
+      Long timeDifference;
+
+      Double averageGrade = 0.0;
+      Double numStudents = 0.0;
+
+      Double lowGrade = 100.0;
+      Double highGrade = 0.0;
+
+      Date dueDate = assignment.getDueDate();
 
 			for(Iterator iter = enrollments.iterator(); iter.hasNext();) {
 			  studentUid = ((EnrollmentRecord)iter.next()).getUser().getUserUid();
 			  gradeRecord = getGradebookManager().getAssignmentGradeRecordForAssignmentForStudent(assignment, studentUid);
 			  score = gradeRecord.getGradeAsPercentage();
 
+        averageGrade = averageGrade += score;
+        numStudents++;
+
+        if (score < lowGrade){
+          min = score;
+        }
+        if (score > highGrade){
+          max = score;
+        } 
+
 				if (score < 60.00){
-					newValue = graphScores.get(0) + 1.00;
-					graphScores.set(0, newValue);
+					newGradeValue = graphScores.get(0) + 1.00;
+					graphScores.set(0, newGradeValue);
 				}
 				if (score < 65 && score >= 60 ){
-					newValue = graphScores.get(1) + 1.00;
-					graphScores.set(1, newValue);
+					newGradeValue = graphScores.get(1) + 1.00;
+					graphScores.set(1, newGradeValue);
 				}
 				if (score < 70 && score >= 65 ){
-					newValue = graphScores.get(2) + 1.00;
-					graphScores.set(2, newValue);
+					newGradeValue = graphScores.get(2) + 1.00;
+					graphScores.set(2, newGradeValue);
 				}
 				if (score < 75 && score >= 70 ){
-					newValue = graphScores.get(3) + 1.00;
-					graphScores.set(3, newValue);
+					newGradeValue = graphScores.get(3) + 1.00;
+					graphScores.set(3, newGradeValue);
 				}
 				if (score < 80 && score >= 75 ){
-					newValue = graphScores.get(4) + 1.00;
-					graphScores.set(4, newValue);
+					newGradeValue = graphScores.get(4) + 1.00;
+					graphScores.set(4, newGradeValue);
 				}
 				if (score < 85 && score >= 80 ){
-					newValue = graphScores.get(5) + 1.00;
-					graphScores.set(5, newValue);
+					newGradeValue = graphScores.get(5) + 1.00;
+					graphScores.set(5, newGradeValue);
 				}
 				if (score < 90 && score >= 85 ){
-					newValue = graphScores.get(6) + 1.00;
-					graphScores.set(6, newValue);
+					newGradeValue = graphScores.get(6) + 1.00;
+					graphScores.set(6, newGradeValue);
 				}
 				if (score < 95 && score >= 90 ){
-					newValue = graphScores.get(7) + 1.00;
-					graphScores.set(7, newValue);
+					newGradeValue = graphScores.get(7) + 1.00;
+					graphScores.set(7, newGradeValue);
 				}
 				if (score >= 95 ){
-					newValue = graphScores.get(8) + 1.00;
-					graphScores.set(8, newValue);
+					newGradeValue = graphScores.get(8) + 1.00;
+					graphScores.set(8, newGradeValue);
 				}
+
+        submissionDate = gradeRecord.getDateRecorded();
+
+        timeDifference = dueDate.getTime() - submissionDate.getTime();
+        if (timeDifference < 0) {
+          newTimeValue = graphDates.get(2) + 1.00;
+          graphDates.set(2, newTimeValue);
+        }
+        if (timeDifference >= 0 && timeDifference <= (24*60*60*1000)) {
+          newTimeValue = graphDates.get(1) + 1.00;
+          graphDates.set(1, newTimeValue);
+        }
+        if (timeDifference > (24*60*60*1000)) {
+          newTimeValue = graphDates.get(0) + 1.00;
+          graphDates.set(0, newTimeValue);
+        }
 			}
+
+      averageGrade = averageGrade / numStudents; 
 		}
 
 		public List getGraphScores() {
 			return graphScores;
 		}
 
-		public void initializeGraphDates() {
-			graphDates = new ArrayList();
+    public List getGraphDates() {
+      return graphDates;
+    }
 
-			graphDates.add(0.00);
-	    graphDates.add(0.00);
-	    graphDates.add(0.00);
+    public Double getAverage() {
+      return averageGrade;
+    }
 
-			List enrollments = getSectionAwareness().getSiteMembersInRole(getGradebookUid(), Role.STUDENT);
+    public Double getLowGrade() {
+      return lowGrade;
+    }
 
-			AssignmentGradeRecord gradeRecord;
-			String studentUid;
-			Date submissionDate;
-			Double newValue;
-			Long timeDifference;
-
-			Date dueDate = assignment.getDueDate();
-
-			for(Iterator iter = enrollments.iterator(); iter.hasNext();) {
-			  studentUid = ((EnrollmentRecord)iter.next()).getUser().getUserUid();
-			  gradeRecord = getGradebookManager().getAssignmentGradeRecordForAssignmentForStudent(assignment, studentUid);
-				submissionDate = gradeRecord.getDateRecorded();
-
-				timeDifference = dueDate.getTime() - submissionDate.getTime();
-				if (timeDifference < 0) {
-					newValue = graphDates.get(2) + 1.00;
-					graphDates.set(2, newValue);
-				}
-				if (timeDifference >= 0 && timeDifference <= (24*60*60*1000)) {
-					newValue = graphDates.get(1) + 1.00;
-					graphDates.set(1, newValue);
-				}
-				if (timeDifference > (24*60*60*1000)) {
-					newValue = graphDates.get(0) + 1.00;
-					graphDates.set(0, newValue);
-				}
-			}
-		}
-
-		public List getGraphDates() {
-			return graphDates;
-		}
+    public Double getHighGrade() {
+      return highGrade;
+    }
 
     public void setGradeRecord(AssignmentGradeRecord gradeRecord) {
     	this.gradeRecord = gradeRecord;
