@@ -177,6 +177,8 @@
 					<h:commandButton value="#{msgs.show_graph_button}" type="button" onclick="jstest(#{row.graphScores});" />
 					<h:commandButton value="#{msgs.show_graph_button_2}" type="button" onclick="jstest2(#{row.graphDates});" />
 
+					<h:commandButton value="#{msgs.show_graphs}" type="button" onclick="show_graphs(#{row.graphScores}, #{row.graphDates});" />
+
 	        <h:outputText value="#{row.commentText}" rendered="#{row.assignment && row.commentText != null}" />
 		    </h:column>
 
@@ -195,10 +197,10 @@
 				</h:panelGroup>
 			</h:panelGrid>
 
-			<h:form id="graphArea">
+			<div id="graphArea">
 				<canvas id="gradeGraph" width="300" height="150"></canvas>
 				<canvas id="dateGraph" width="300" height="150"></canvas>
-			</h:form>
+			</div>
 
 		</h:form>
 	</div>
