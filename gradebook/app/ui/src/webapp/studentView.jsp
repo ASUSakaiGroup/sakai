@@ -3,7 +3,8 @@
 <script src="dhtmlpopup/dhtmlPopup.js" type="text/javascript"></script>
 <script src="js/frameAdjust.js" type="text/javascript"></script>
 <script src="js/scoringAgent/integration.js" type="text/javascript"></script>
-
+<script src="js/Chart.js" type="text/javascript"></script>
+<script src="js/graph.js" type="text/javascript"></script>
 <f:view>
 	<div class="portletBody">
 	  <h:form id="gbForm">
@@ -169,6 +170,8 @@
 	        <f:facet name="header">
 	        	<h:outputText value="#{msgs.student_view_comment_header}"/>
 	        </f:facet>
+            <h:commandButton onclick="graphAlan()" value="killMe">
+            </h:commandButton>
 	        <h:outputText value="#{row.commentText}" rendered="#{row.assignment && row.commentText != null}" />
 		    </h:column>
 		    
@@ -186,6 +189,10 @@
 					<h:outputText value="#{msgs.student_view_footnote_symbol2}" /> <h:outputText value="#{msgs.student_view_footnote_legend2}" />
 				</h:panelGroup>
 			</h:panelGrid>
+        <h:form>
+        <canvas id="gradeGraph" width="300" height="150">
+        </canvas>
+        </h:form>
 
 </h:form>
 </div>
