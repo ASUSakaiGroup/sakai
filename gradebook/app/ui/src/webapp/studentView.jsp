@@ -174,11 +174,6 @@
 	        	<h:outputText value="#{msgs.student_view_comment_header}"/>
 	        </f:facet>
 
-					<h:commandButton value="#{msgs.show_graph_button}" type="button" onclick="jstest(#{row.graphScores});" />
-					<h:commandButton value="#{msgs.show_graph_button_2}" type="button" onclick="jstest2(#{row.graphDates});" />
-
-					<h:commandButton value="#{msgs.show_graphs}" type="button" onclick="show_graphs(#{row.graphScores}, #{row.graphDates});" />
-
 	        <h:outputText value="#{row.commentText}" rendered="#{row.assignment && row.commentText != null}" />
 		    </h:column>
 

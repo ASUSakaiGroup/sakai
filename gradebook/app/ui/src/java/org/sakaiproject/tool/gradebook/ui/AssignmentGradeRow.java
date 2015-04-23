@@ -60,20 +60,18 @@ public class AssignmentGradeRow extends GradebookDependentBean implements Serial
     	this.assignment = assignment;
     	this.gradebook = gradebook;
     	commentText = "";
-			initializeGraphScores();
-			initializeGraphDates();
+			initializeGraphArrays();
     }
     public AssignmentGradeRow(Assignment assignment, Gradebook gradebook, boolean userCanGrade) {
     	this.assignment = assignment;
     	this.gradebook = gradebook;
     	commentText = "";
     	this.userCanGrade = userCanGrade;
-			initializeGraphScores();
-			initializeGraphDates();
+			initializeGraphArrays();
     }
 
 		public void initializeGraphArrays() {
-			graphScores = new ArrayList();
+		  graphScores = new ArrayList();
 
 	    graphScores.add(0.00);
 	    graphScores.add(0.00);
@@ -93,7 +91,7 @@ public class AssignmentGradeRow extends GradebookDependentBean implements Serial
       graphDates.add(0.00);
       graphDates.add(0.00);
 
-			List enrollments = getSectionAwareness().getSiteMembersInRole(getGradebookUid(), Role.STUDENT);
+			// List enrollments = getSectionAwareness().getSiteMembersInRole(getGradebookUid(), Role.STUDENT);
 
 			AssignmentGradeRecord gradeRecord;
 			String studentUid;
@@ -104,85 +102,85 @@ public class AssignmentGradeRow extends GradebookDependentBean implements Serial
       Double newTimeValue;
       Long timeDifference;
 
-      Double averageGrade = 0.0;
-      Double numStudents = 0.0;
+   //    averageGrade = 0.0;
+   //    Double numStudents = 0.0;
 
-      Double lowGrade = 100.0;
-      Double highGrade = 0.0;
+   //    lowGrade = 100.0;
+   //    highGrade = 0.0;
 
-      Date dueDate = assignment.getDueDate();
+   //    Date dueDate = assignment.getDueDate();
 
-			for(Iterator iter = enrollments.iterator(); iter.hasNext();) {
-			  studentUid = ((EnrollmentRecord)iter.next()).getUser().getUserUid();
-			  gradeRecord = getGradebookManager().getAssignmentGradeRecordForAssignmentForStudent(assignment, studentUid);
-			  score = gradeRecord.getGradeAsPercentage();
+			// for(Iterator iter = enrollments.iterator(); iter.hasNext();) {
+			  // studentUid = ((EnrollmentRecord)iter.next()).getUser().getUserUid();
+			  //gradeRecord = getGradebookManager().getAssignmentGradeRecordForAssignmentForStudent(assignment, studentUid);
+			 //  score = gradeRecord.getGradeAsPercentage();
 
-        averageGrade = averageGrade += score;
-        numStudents++;
+    //     averageGrade = averageGrade += score;
+    //     numStudents++;
 
-        if (score < lowGrade){
-          min = score;
-        }
-        if (score > highGrade){
-          max = score;
-        } 
+    //     if (score < lowGrade){
+    //       lowGrade = score;
+    //     }
+    //     if (score > highGrade){
+    //       highGrade = score;
+    //     } 
 
-				if (score < 60.00){
-					newGradeValue = graphScores.get(0) + 1.00;
-					graphScores.set(0, newGradeValue);
-				}
-				if (score < 65 && score >= 60 ){
-					newGradeValue = graphScores.get(1) + 1.00;
-					graphScores.set(1, newGradeValue);
-				}
-				if (score < 70 && score >= 65 ){
-					newGradeValue = graphScores.get(2) + 1.00;
-					graphScores.set(2, newGradeValue);
-				}
-				if (score < 75 && score >= 70 ){
-					newGradeValue = graphScores.get(3) + 1.00;
-					graphScores.set(3, newGradeValue);
-				}
-				if (score < 80 && score >= 75 ){
-					newGradeValue = graphScores.get(4) + 1.00;
-					graphScores.set(4, newGradeValue);
-				}
-				if (score < 85 && score >= 80 ){
-					newGradeValue = graphScores.get(5) + 1.00;
-					graphScores.set(5, newGradeValue);
-				}
-				if (score < 90 && score >= 85 ){
-					newGradeValue = graphScores.get(6) + 1.00;
-					graphScores.set(6, newGradeValue);
-				}
-				if (score < 95 && score >= 90 ){
-					newGradeValue = graphScores.get(7) + 1.00;
-					graphScores.set(7, newGradeValue);
-				}
-				if (score >= 95 ){
-					newGradeValue = graphScores.get(8) + 1.00;
-					graphScores.set(8, newGradeValue);
-				}
+				// if (score < 60.00){
+				// 	newGradeValue = graphScores.get(0) + 1.00;
+				// 	graphScores.set(0, newGradeValue);
+				// }
+				// if (score < 65 && score >= 60 ){
+				// 	newGradeValue = graphScores.get(1) + 1.00;
+				// 	graphScores.set(1, newGradeValue);
+				// }
+				// if (score < 70 && score >= 65 ){
+				// 	newGradeValue = graphScores.get(2) + 1.00;
+				// 	graphScores.set(2, newGradeValue);
+				// }
+				// if (score < 75 && score >= 70 ){
+				// 	newGradeValue = graphScores.get(3) + 1.00;
+				// 	graphScores.set(3, newGradeValue);
+				// }
+				// if (score < 80 && score >= 75 ){
+				// 	newGradeValue = graphScores.get(4) + 1.00;
+				// 	graphScores.set(4, newGradeValue);
+				// }
+				// if (score < 85 && score >= 80 ){
+				// 	newGradeValue = graphScores.get(5) + 1.00;
+				// 	graphScores.set(5, newGradeValue);
+				// }
+				// if (score < 90 && score >= 85 ){
+				// 	newGradeValue = graphScores.get(6) + 1.00;
+				// 	graphScores.set(6, newGradeValue);
+				// }
+				// if (score < 95 && score >= 90 ){
+				// 	newGradeValue = graphScores.get(7) + 1.00;
+				// 	graphScores.set(7, newGradeValue);
+				// }
+				// if (score >= 95 ){
+				// 	newGradeValue = graphScores.get(8) + 1.00;
+				// 	graphScores.set(8, newGradeValue);
+				// }
 
-        submissionDate = gradeRecord.getDateRecorded();
+    //     submissionDate = gradeRecord.getDateRecorded();
 
-        timeDifference = dueDate.getTime() - submissionDate.getTime();
-        if (timeDifference < 0) {
-          newTimeValue = graphDates.get(2) + 1.00;
-          graphDates.set(2, newTimeValue);
-        }
-        if (timeDifference >= 0 && timeDifference <= (24*60*60*1000)) {
-          newTimeValue = graphDates.get(1) + 1.00;
-          graphDates.set(1, newTimeValue);
-        }
-        if (timeDifference > (24*60*60*1000)) {
-          newTimeValue = graphDates.get(0) + 1.00;
-          graphDates.set(0, newTimeValue);
-        }
-			}
+    //     timeDifference = dueDate.getTime() - submissionDate.getTime();
+    //     if (timeDifference < 0) {
+    //       newTimeValue = graphDates.get(2) + 1.00;
+    //       graphDates.set(2, newTimeValue);
+    //     }
+    //     if (timeDifference >= 0 && timeDifference <= (24*60*60*1000)) {
+    //       newTimeValue = graphDates.get(1) + 1.00;
+    //       graphDates.set(1, newTimeValue);
+    //     }
+    //     if (timeDifference > (24*60*60*1000)) {
+    //       newTimeValue = graphDates.get(0) + 1.00;
+    //       graphDates.set(0, newTimeValue);
+    //     }
+			// }
 
-      averageGrade = averageGrade / numStudents; 
-		}
+      // averageGrade = averageGrade / numStudents; 
+	  } 
 
 		public List getGraphScores() {
 			return graphScores;
@@ -192,17 +190,17 @@ public class AssignmentGradeRow extends GradebookDependentBean implements Serial
       return graphDates;
     }
 
-    public Double getAverage() {
-      return averageGrade;
-    }
+    // public Double getAverage() {
+    //   return averageGrade;
+    // }
 
-    public Double getLowGrade() {
-      return lowGrade;
-    }
+    // public Double getLowGrade() {
+    //   return lowGrade;
+    // }
 
-    public Double getHighGrade() {
-      return highGrade;
-    }
+    // public Double getHighGrade() {
+    //   return highGrade;
+    // }
 
     public void setGradeRecord(AssignmentGradeRecord gradeRecord) {
     	this.gradeRecord = gradeRecord;
