@@ -174,9 +174,12 @@
 	        <f:facet name="header">
 	        	<h:outputText value="#{msgs.student_view_comment_header}"/>
 	        </f:facet>
-	        
 	        <h:outputText value="#{row.commentText}" rendered="#{row.assignment && row.commentText != null}" />
 		    </h:column>
+
+				<h:column>
+					<h:commandButton value="#{msgs.show_graph}" type="button" onclick="createGradeGraph(#{row.graphScores}); createDateGraph(#{row.graphDates});" />
+				</h:column>
 
 		    <h:column rendered="#{studentViewBean.anyExternallyMaintained}">
 		       <h:outputText value="#{msgs.overview_from} #{row.associatedAssignment.externalAppName}" rendered="#{row.assignment && row.associatedAssignment.externallyMaintained}" />
@@ -192,10 +195,7 @@
 					<h:outputText value="#{msgs.student_view_footnote_symbol2}" /> <h:outputText value="#{msgs.student_view_footnote_legend2}" />
 				</h:panelGroup>
 			</h:panelGrid>
-        <h:form>
-        <canvas id="gradeGraph" width="300" height="150">
-        </canvas>
-        </h:form>
+
 
 			<div id="graphArea">
 				<canvas id="gradeGraph" width="300" height="150"></canvas>

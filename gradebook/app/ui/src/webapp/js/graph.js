@@ -28,7 +28,7 @@ function createGradeGraph(scores)
       data : categoryNumbersGrade
       },
     ]
-  }
+  };
 
   var canvas = document.getElementById('gradeGraph');
   var context = canvas.getContext('2d');
@@ -59,7 +59,7 @@ function createDateGraph(dates)
       data : categoryNumbersDate
       },
     ]
-  }
+  };
 
   var canvas = document.getElementById('dateGraph');
   var context = canvas.getContext('2d');
