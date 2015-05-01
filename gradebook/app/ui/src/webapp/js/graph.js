@@ -4,18 +4,17 @@ function show_graphs(scores, dates) {
   graphArea.innerHTML = '<canvas id="gradeGraph" width="300" height="150"></canvas>';
   graphArea.innerHTML = graphArea.innerHTML + '<canvas id="dateGraph" width="300" height="150"></canvas>';
 
-  jstest(scores);
-  jstest2(dates);
+  createGradeGraph(scores);
+  createDateGraph(dates);
 }
 
 
-function jstest(scores)
+function createGradeGraph(scores)
 {
-  console.log("jstest");
+  console.log("createGradeGraph");
   console.log(scores);
 
   var categoryNumbersGrade = scores; // This is the array for how many students are in each category
-  var studentLocationGrade = 8;
 
   var gradeData = {
     labels : ["0-59","60-64","65-69","70-74","75-79","80-84","85-89","90-94","95-100+"],
@@ -38,19 +37,15 @@ function jstest(scores)
   gradeGraph.datasets[0].bars[0].fillColor = "red";
   gradeGraph.datasets[0].bars[0].highlightFill = "pink";
 
-  gradeGraph.datasets[0].bars[studentLocationGrade].fillColor = "green";
-  gradeGraph.datasets[0].bars[studentLocationGrade].highlightFill = "lightgreen";
-
   gradeGraph.update();
 }
 
-function jstest2(dates)
+function createDateGraph(dates)
 {
-  console.log("jstest2");
+  console.log("createDateGraph");
   console.log(dates);
 
   var categoryNumbersDate = dates; // This is the array for how many students are in each category
-  var studentLocationDate = 2;
 
   var dateData = {
     labels : ["1 Week", "1 Day", "Late"],
@@ -70,11 +65,8 @@ function jstest2(dates)
   var context = canvas.getContext('2d');
   var dateGraph = new Chart(context).Bar(dateData);
 
-  dateGraph.datasets[0].bars[0].fillColor = "red";
-  dateGraph.datasets[0].bars[0].highlightFill = "pink";
-
-  dateGraph.datasets[0].bars[studentLocationDate].fillColor = "green";
-  dateGraph.datasets[0].bars[studentLocationDate].highlightFill = "lightgreen";
+  dateGraph.datasets[2].bars[2].fillColor = "red";
+  dateGraph.datasets[2].bars[2].highlightFill = "pink";
 
   dateGraph.update();
 }
